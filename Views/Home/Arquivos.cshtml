@@ -1,0 +1,48 @@
+﻿
+@model IEnumerable<UploadArquivos.Models.Arquivo>
+
+@{
+    ViewData["Title"] = "Arquivos";
+}
+
+<style>
+    .input-group {
+        visibility: hidden;
+    }
+</style>
+
+
+<div style="margin-top:18%">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <input type="file" id="input-fas" name="files" multiple>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+
+    <script>
+
+
+             $(document).ready(function () {
+                @{
+                    var host = $"{Context.Request.Scheme}://{Context.Request.Host.Value}";
+                    var urls = Html.Raw(Json.Serialize(Model.Select(x => x.Caminho.Contains("pdf") ? $"{host}/{x.Caminho}" : $"<img src='{host}/{x.Caminho}' class='kv-preview-data file-preview-image'>").ToList()));
+                    var config = Html.Raw(Json.Serialize(Model.Select(x => new
+                    {
+                        Type = x.Nome.Remove(0, (x.Nome.IndexOf('.') + 1)),
+                        Caption = x.NomeOriginal,
+                        PreviewAsData = x.Nome.Contains("pdf")
+
+                    }).ToList()));
+                }
+
+                previews(@urls);
+                configs(@config);
+             })
+    </script>
+}
