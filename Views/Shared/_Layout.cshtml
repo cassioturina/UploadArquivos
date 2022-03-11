@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-
+  
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -30,6 +30,7 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.unobtrusive-ajax/3.2.5/jquery.unobtrusive-ajax.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/plugins/piexif.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/plugins/sortable.min.js" type="text/javascript"></script>
@@ -63,7 +64,7 @@
                 showUpload: false,
                 showRemove: false,
                 overwriteInitial: true,
-                dropZoneEnabled: false,
+                dropZoneEnabled: true,
                 mainClass: "input-group-lg",
                 previewFileType: ["jpg", "jpeg", "bmp", "png", "pdf"],
                 allowedFileExtensions: ["jpg", "jpeg", "bmp", "png", "pdf"],
@@ -93,17 +94,14 @@
                 initialPreviewConfig: initialConfig
             }
 
-            $(".input-fas").fileinput(options);
-            $(".input-fas").on('click', function () {
+            $("#input-fas").fileinput(options);
+            $("#input-fas").on('click', function () {
                 $("#input-fas").fileinput("enable").fileinput("clear", options);
             });
 
         });
 
     </script>
-    <script src="https://ajax.aspnetcdn.com/ajax/jquery.unobtrusive-ajax/3.2.5/jquery.unobtrusive-ajax.min.js"></script>
-
-    <partial name="_ValidationScriptsPartial" />
 
 </body>
 </html>

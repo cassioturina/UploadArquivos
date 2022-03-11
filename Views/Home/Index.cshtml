@@ -5,34 +5,14 @@
 }
 
 <div style="margin-top:18%">
-    <form asp-action="Index" method="post" enctype="multipart/form-data">
-
-        <div class="row border p-4">
-
-            @for (var i = 0; i < @Model.Arquivos.Count; i++)
-            {
-                <input type="hidden" asp-for="@Model.Arquivos[i].Descricao">
-                <input type="hidden" asp-for="@Model.Arquivos[i].Requerido">
-
-                var requerido = Model.Arquivos[i].Requerido ? "true" : "false";
-
-                <div class="col-md-4">
-                    <label class="font-weight-bold" for="input-fas">
-                        @Model.Arquivos[i].Descricao
-                    </label>
-                    <input type="file" asp-for="@Model.Arquivos[i].File"
-                       class="input-fas"
-                       data-allowed-file-extensions='["pdf", "jpg", "jpeg", "bmp", "png"]'
-                       data-val="@requerido">
-                    <span asp-validation-for="@Model.Arquivos[i].File" class="text-danger"></span>
-                    <span class="text-sm-right text-right">
-                        @Model.Arquivos[i].Descricao
-                    </span><br />
-                </div>
-            }
-
-            <button type="submit" class="btn btn-primary btn-block">upload</button>
-            <span class="text-sm-right text-right">Arquivos aceitos ( pdf,jpg, jpeg, bmp, png)</span>
+    <div class="row">
+        <div class="col-md-12">
+            <form asp-action="Index" method="post" enctype="multipart/form-data">
+                <label class="font-weight-bold" for="input-fas">Selecione os arquivos</label>
+                <input type="file" asp-for="Files"  id="input-fas" name="files" data-allowed-file-extensions='["pdf", "doc", "docx", "jpg", "jpeg", "bmp", "png", "xlsx", "xls"]' multiple>
+                <span class="text-sm-right text-right">Arquivos aceitos ( pdf, doc, docx, jpg, jpeg, bmp, png, xlsx, xls )</span>
+                <button type="submit" class="btn btn-primary btn-block">upload</button>
+            </form>
         </div>
-    </form>
+    </div>
 </div>
