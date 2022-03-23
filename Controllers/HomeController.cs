@@ -21,7 +21,7 @@ namespace UploadArquivos.Controllers
         [HttpGet()]
         public IActionResult Index()
         {
-            return View();
+            return View(new UploadModel());
         }
 
         [HttpPost()]
@@ -30,18 +30,18 @@ namespace UploadArquivos.Controllers
             ArquivosUpload = new List<Arquivo>();
             foreach (var arquivo in model?.Files)
             {
-                if (!ArquivoEhValido(arquivo))
+                if (!ArquivoEhValido(arquivo.File))
                 {
                     //
                     continue;
                 }
 
-                var nomeNoDiretorio = RenomearArquivo(arquivo);
+                var nomeNoDiretorio = RenomearArquivo(arquivo.File);
                 var path = PathTo("upload", nomeNoDiretorio);
                 var caminhoNoSevidor = CriarDiretorioPara("arquivos/upload");
-                GravaArquivoNaPasta(arquivo, $"{caminhoNoSevidor}/{nomeNoDiretorio}");
+                GravaArquivoNaPasta(arquivo.File, $"{caminhoNoSevidor}/{nomeNoDiretorio}");
 
-                ArquivosUpload.Add(new Arquivo( $"{path}", nomeNoDiretorio,  arquivo.FileName ));
+                ArquivosUpload.Add(new Arquivo( $"{path}", nomeNoDiretorio, arquivo.File.FileName ));
             }
 
 

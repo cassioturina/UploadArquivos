@@ -5,14 +5,35 @@
 }
 
 <div style="margin-top:18%">
-    <div class="row">
-        <div class="col-md-12">
-            <form asp-action="Index" method="post" enctype="multipart/form-data">
-                <label class="font-weight-bold" for="input-fas">Selecione os arquivos</label>
-                <input type="file" asp-for="Files"  id="input-fas" name="files" data-allowed-file-extensions='["pdf", "doc", "docx", "jpg", "jpeg", "bmp", "png", "xlsx", "xls"]' multiple>
-                <span class="text-sm-right text-right">Arquivos aceitos ( pdf, doc, docx, jpg, jpeg, bmp, png, xlsx, xls )</span>
-                <button type="submit" class="btn btn-primary btn-block">upload</button>
-            </form>
+    <form asp-action="Index" method="post" enctype="multipart/form-data">
+
+        <div class="row">
+            @for (var i = 0; i < @Model.Files.Count; i++)
+            {
+                var obrigatorio = @Model.Files[i].Obrigatoria ? "true" : "false";
+
+                <div class="col-md-6 mb-3">
+                    <label class="font-weight-bold" for="@i">@Model.Files[i].Tipo</label>
+                    <br />
+                    <span class="text-sm-right text-right">@Model.Files[i].Descricao</span>
+                    <input type="file" asp-for="@Model.Files[i].File" id="@i" class="input-fas" data-msg-placeholder="@Model.Files[i].Tipo"
+                       data-val="@obrigatorio"
+                       data-val-required="Documento obrigatório."
+                       data-allowed-file-extensions='["pdf", "doc", "docx", "jpg", "jpeg", "bmp", "png", "xlsx", "xls"]'>
+                    @if (@Model.Files[i].Obrigatoria)
+                    {
+                        <span class="text-sm-right text-right">Documento obrigatório.</span>
+                        <br />
+
+                    }
+                    <span asp-validation-for="@Model.Files[i].File" class="text-danger"></span>
+                </div>
+            }
         </div>
-    </div>
+        <span class="text-sm-right text-right">Arquivos aceitos ( pdf, doc, docx, jpg, jpeg, bmp, png, xlsx, xls )</span>
+        <button type="submit" class="btn btn-primary btn-block">upload</button>
+    </form>
+
+
 </div>
+<partial name="_ValidationScriptsPartial" />

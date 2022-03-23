@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-  
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -41,8 +41,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/locales/pt-BR.js"></script>
 
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", required: false)
+    <partial name="_ValidationScriptsPartial" />
 
+    @RenderSection("Scripts", required: false)
 
     <script>
         let preview;
@@ -64,8 +65,8 @@
                 showUpload: false,
                 showRemove: false,
                 overwriteInitial: true,
-                dropZoneEnabled: true,
-                mainClass: "input-group-lg",
+                dropZoneEnabled: false,
+                mainClass: "input-group-sm",
                 previewFileType: ["jpg", "jpeg", "bmp", "png", "pdf"],
                 allowedFileExtensions: ["jpg", "jpeg", "bmp", "png", "pdf"],
                 image: { width: "auto", height: "auto", 'max-width': "100%", 'max-height': "100%" },
@@ -77,7 +78,8 @@
                     'pdf': '<i class="fa fa-file-pdf-o text-danger"></i>',
                 },
                 removeFromPreviewOnError: true,
-                maxFileCount: 5,
+                msgPlaceholder: 'Procurar...',
+                //maxFileCount: 5,
                 minFileCount: 1,
                 dropZoneTitle: 'Arraste seus arquivos aqui - ou',
                 filepreremove: false,
@@ -94,9 +96,9 @@
                 initialPreviewConfig: initialConfig
             }
 
-            $("#input-fas").fileinput(options);
-            $("#input-fas").on('click', function () {
-                $("#input-fas").fileinput("enable").fileinput("clear", options);
+            $(".input-fas").fileinput(options);
+            $(".input-fas").on('click', function () {
+                $(".input-fas").fileinput("enable").fileinput("clear", options);
             });
 
         });
